@@ -46,3 +46,13 @@ if __name__ == '__main__':
     # retorna una query
     query = User.insert_many(users)
     query.execute()
+    
+    # SELECT username, email, active * FROM users;
+    users = User.select(User.username, User.email, User.active)
+    ##### retorna un objeto ModelSelect
+    
+    # print(users)
+    for user in users:
+        print(user.active)
+    
+    
