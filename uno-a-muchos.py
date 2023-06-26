@@ -1,5 +1,4 @@
 import peewee
-from datetime import datetime
 
 database = peewee.MySQLDatabase('pythonpeewee', 
     host='localhost', 
