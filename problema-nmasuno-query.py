@@ -65,5 +65,18 @@ if __name__ == '__main__':
     # Múltiples consultas que pueden ser evitadas
     # Para solucionarlo deben usarse joins
     
+    ##### inner join
+    for product in Product.select(
+        Product.title, Category.title
+    ).join(
+        ProductCategory
+    ).join(Category, 
+        on=(
+            ProductCategory.category_id == Category.id
+        )
+    ):
+        print(product, '-', product.productcategory.category.title)
+        
+        
     
     
