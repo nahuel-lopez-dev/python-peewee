@@ -45,6 +45,10 @@ if __name__ == '__main__':
     iphone = Product.create(title='Iphone', price=800.00)
     tv = Product.create(title='TV', price=600.00)
     
+    Product.create(title='Product1', price=600.00)
+    Product.create(title='Product2', price=600.00)
+    Product.create(title='Product3', price=600.00)
+    
     technology = Category.create(title='Technology')
     home = Category.create(title='Home')
     
@@ -56,27 +60,40 @@ if __name__ == '__main__':
     
     # Mostrar en consola todos los productos con sus correspondientes categorías
     # problema N+1 Query -> solución: Joins
-    for product in Product.select(): # 1 
+    # for product in Product.select(): # 1 
         
-        for product_category in product.categories: # 2
+    #     for product_category in product.categories: # 2
             
-            print(product, '-', product_category.category) # 3
+    #         print(product, '-', product_category.category) # 3
             
     # Múltiples consultas que pueden ser evitadas
     # Para solucionarlo deben usarse joins
     
     ##### inner join
-    for product in Product.select(
-        Product.title, Category.title
+    # for product in Product.select(
+    #     Product.title, Category.title
+    # ).join(
+    #     ProductCategory
+    # ).join(Category, 
+    #     on=(
+    #         ProductCategory.category_id == Category.id
+    #     )
+    # ):
+    #     print(product, '-', product.productcategory.category.title)
+    
+    ##### left join
+    products = Product.select(
+        Product.title
     ).join(
-        ProductCategory
-    ).join(Category, 
-        on=(
-            ProductCategory.category_id == Category.id
-        )
-    ):
-        print(product, '-', product.productcategory.category.title)
-        
+        ProductCategory,
+        peewee.JOIN.LEFT_OUTER
+    ).where(
+        ProductCategory.id == None
+    )
+    
+    # print(products)
+    for product in products:
+        print(product.title)
         
     
     
